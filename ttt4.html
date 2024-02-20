@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tic Tac Toe</title>
+  <style>
+    .square {
+      width: 120px;
+      height: 120px;
+      margin: 5px;
+      border: 1px solid #333;
+      display: inline-block;
+      vertical-align: top;
+      font-size: 50px;
+      text-align: center;
+      box-sizing: border-box;
+      line-height: 120px;
+      border-radius: 10px;
+    }
+
+    .square:hover {
+      background-color: #F1EEAO;
+    }
+
+    .board {
+      width: 400px;
+    }
+  </style>
+</head>
+<body>
+<div id="board" class="board"></div>
+<script>
+  const NUM_ROWS = 3;
+  const NUM_COLS = 3;
+  const NUM_SQUARES = NUM_ROWS * NUM_COLS;
+  let currentPlayer = Math.random() < 0.5 ? 'X' : 'O';
+
+  for (let i = 0; i < NUM_ROWS; i++) {
+    const row = document.createElement('div');
+    row.classList.add('row');
+
+    for (let j = 0; j < NUM_COLS; j++) {
+      const squareIndex = i * NUM_COLS + j;
+      const id = "sq" + squareIndex;
+      const square = document.createElement('div');
+      square.className = 'square';
+      square.id = id;
+      square.addEventListener('click', squareClickHandler);
+
+      row.appendChild(square);
+    }
+
+    document.querySelector('.board').appendChild(row);
+  }
+
+  function squareClickHandler(event) {
+    const square = event.target;
+    if (square.textContent === '') {
+      square.textContent = currentPlayer;
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; 
+      updateTurnIndicator();
+    }
+  }
+
+  function updateTurnIndicator() {
+    const turnIndicator = document.querySelector('.turn-indicator');
+    turnIndicator.textContent = currentPlayer + "'s Turn";
+  }
+
+  updateTurnIndicator();
+</script>
+<div class="turn-indicator"></div>
+</body>
+</html>
